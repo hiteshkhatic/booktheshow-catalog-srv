@@ -1,0 +1,136 @@
+paths:
+  /api/catalog/movies:
+    post:
+      summary: Insert a new movie
+      tags: [Catalog]
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              type: object
+              required: [title, description, duration_minutes, language, genre, release_date, poster_url]
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                duration_minutes:
+                  type: number
+                language: 
+                  type: string
+                genre: 
+                  type: string
+                release_date:
+                  type: string
+                poster_url:
+                  type: string 
+      responses:
+        201: 
+          description: Movie inserted successfully
+        400:
+          description: Validation error or duplicate data 
+    get:
+      summary: Fetch all the movies
+      tags: [Catalog]
+      parameters:
+        - name: city
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: genre
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+      security: [] 
+      responses:
+        200:
+          description: all records fetched
+        404:
+          description: no data found
+  
+  /api/catalog/screens:
+    post:
+      summary: add screens for the movie
+      tags: [Catalog]
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              type: object
+              required: [theater_id, name, seat_layout]
+              properties:
+                theater_id:
+                  type: number
+                name:
+                  type: string
+                seat_layout: 
+                  type: string 
+      responses:
+        200:
+          description: screen added successfully
+        400:
+          description: not valid entry
+
+  /api/catalog/showtimes:
+    post:
+      summary: schedule shotimes for movie
+      tags: [Catalog]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              required: [movie_id, screen_id, start_time, end_time, base_price]
+              properties:
+                movie_id: 
+                  type: number
+                screen_id: 
+                  type: number
+                start_time: 
+                  type: number
+                end_time:
+                  type: number 
+      responses:
+        201:
+          description: added showtimes for the movies
+        400:
+          description: failed to schedule showtimes
+
+  /api/catalog/theaters:
+    post:
+      summary: add a new theater
+      tags: [Catalog]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object 
+              required: [name, city, address]
+              properties:
+                name: 
+                  type: string
+                city:
+                  type: string
+                address:
+                  type: string
+      responses:
+        201:
+          description: added a new theater
+        400:
+          description: unable to add a new theater

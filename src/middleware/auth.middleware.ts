@@ -13,7 +13,7 @@ export const authenticateJWT = (
     next: NextFunction
 ) => {
     try {
-        const authHeader = req.headers.authorization;
+        const authHeader = req.headers.authorization || req.body.accessToken;
 
         if (!authHeader) {
             return res.status(401).json({

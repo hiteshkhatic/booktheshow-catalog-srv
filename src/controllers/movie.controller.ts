@@ -36,7 +36,7 @@ export const createMovie = async (
   }
 }
 
-export const getMovie = async (
+export const getMovieController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -50,6 +50,13 @@ export const getMovie = async (
       ...(typeof req.query.genre === "string" && { genre: req.query.genre }),
       ...(typeof req.query.date === "string" && { date: req.query.date }),
     });
+
+    if (movies.length == 0 || !movies ) { 
+      res.status(404).json({
+        message: 'no movies exit'
+      });
+      return;
+    }
 
     return res.status(200).json({
       movies,

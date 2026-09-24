@@ -5,11 +5,14 @@ import moviesRoutes from "./routes/movies.routes.js";
 import screensRoutes from "./routes/screens.routes.js";
 import showtimesRoutes from "./routes/showtimes.routes.js";
 import theatersRoutes from "./routes/theaters.routes.js";
+import { setupSwagger } from "./docs/swagger.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+setupSwagger(app);
 
 app.use("/api/catalog", moviesRoutes);
 app.use("/api/catalog", screensRoutes);
